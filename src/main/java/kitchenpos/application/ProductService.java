@@ -1,7 +1,7 @@
 package kitchenpos.application;
 
 import kitchenpos.domain.*;
-import kitchenpos.infra.PurgomalumClient;
+import kitchenpos.infra.DefaultPurgomalumClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +15,12 @@ import java.util.UUID;
 public class ProductService {
     private final ProductRepository productRepository;
     private final MenuRepository menuRepository;
-    private final PurgomalumClient purgomalumClient;
+    private final DefaultPurgomalumClient purgomalumClient;
 
     public ProductService(
         final ProductRepository productRepository,
         final MenuRepository menuRepository,
-        final PurgomalumClient purgomalumClient
+        final DefaultPurgomalumClient purgomalumClient
     ) {
         this.productRepository = productRepository;
         this.menuRepository = menuRepository;
@@ -30,7 +30,7 @@ public class ProductService {
     @Transactional
     public Product create(final Product request) {
         final UUID id = request.getId();
-        if (Objects.nonNull(id) && productRepository.existsById(id)) {
+        if (Objects.nonNull(id)) {
             throw new IllegalArgumentException();
         }
         final BigDecimal price = request.getPrice();

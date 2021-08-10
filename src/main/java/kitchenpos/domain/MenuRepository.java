@@ -11,3 +11,7 @@ public interface MenuRepository extends JpaRepository<Menu, UUID> {
     @Query("select m from Menu m, MenuProduct mp where mp.product.id = :productId")
     List<Menu> findAllByProductId(@Param("productId") UUID productId);
 }
+
+interface JpaMenuRepository extends MenuRepository, JpaRepository<Menu, UUID> {
+
+}
